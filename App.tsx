@@ -8,6 +8,8 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Button,
+  NativeModules,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -31,9 +33,10 @@ type SectionProps = PropsWithChildren<{
 
 function Section({children, title}: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  
   return (
     <View style={styles.sectionContainer}>
-      <Text
+     <Text
         style={[
           styles.sectionTitle,
           {
@@ -62,6 +65,12 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const {TestModule} = NativeModules;
+
+  const onPress = () => {
+    TestModule.helloWorld("Was");
+  }
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -72,6 +81,11 @@ function App(): React.JSX.Element {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
+        <Button
+          title="Click pls"
+          color="#808080"
+          onPress={onPress}
+        />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
